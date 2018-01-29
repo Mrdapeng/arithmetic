@@ -27,7 +27,7 @@ function partiton2(arr,l,r){
         }
     }
     swap(arr,more,r)
-    return arr
+    return [less+1,more]
 }
 function myParition(arr,L,R){
     var less = L-1
@@ -44,9 +44,36 @@ function myParition(arr,L,R){
     }
     return arr
 }
+
+function helanguoqi(arr,l,r){
+    var less = l -1
+    var more = r 
+    while(l<more){
+        if(arr[l]<arr[r])
+        {
+            swap(arr,++less,l++)
+        }else if (arr[l]>arr[r]){
+            swap(arr,--more,l)
+        }else{
+            l++
+        }
+    }
+    swap(arr,more,r)
+    return arr
+}
+function quickSort(arr,l,r){
+    if(l<r){
+        swap(arr,l+~~(Math.random()*(r-l+1)),r)
+        var p = partiton2(arr,l,r)
+        quickSort(arr,l,p[0]-1)
+        quickSort(arr,p[1]+1,r)
+    }
+    return arr
+}
 function main(){
     var test = [3,2,4,5,7,6,4]
-    var result = partiton2(test,0,test.length-1)
-    console.log("result",result)
+    // var result = partiton2(test,0,test.length-1)
+    var quickReult =quickSort(test,0,test.length-1)
+    console.log("result",quickReult)
 }
 main()
