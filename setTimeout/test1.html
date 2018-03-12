@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function run() {
+        for (var i = 0; i < 5; i++) {
+            setTimeout(function () {
+                console.log(i)
+            }, i * 1000)
+        }
+    }
+    // run()
+    function run() {
+        for (let i = 0; i < 5; i++) {
+            setTimeout(function () {
+                console.log(i + 'let')
+            }, i * 1000)
+        }
+    }
+    // run()
+
+
+
+    function run() {
+        for (var i = 0; i < 5; i++) {
+            (function (i) {
+                setTimeout(function () {
+                    console.log(i)
+                }, i * 1000)
+            })(i);
+        }
+    }
+    // run()
+
+
+    function run(){
+        for (var i= 0; i< 5; i++) {
+            setTimeout((function(i){
+              console.log('run now'+i)
+            })(i),i*1000000)
+        }
+    }
+    run()
+
+    function run2(){
+        for(var i =0;i<5;i++){
+            (function(i){
+                setTimeout(function(){
+                    console.log(i)
+                },i*1000)                 
+            })(i)
+        }
+    }
+    // run2()
+    function run3(){
+        for(var i = 0;i<5;i++){
+            setTimeout((function(){
+                console.log(i)
+            })(i),i*1000)
+        }
+    }
+    // run3()
+    (function(){
+        console.log(this)
+    })()
+    var name= 'window'
+    var o={
+        name:'mine',
+        getNameFun:function(){
+            return function(){
+                console.log(this)
+            }
+        }
+    }
+</script>
+
+</html>

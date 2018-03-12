@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var oFragment = document.createDocumentFragment();
+for(var i = 0 ; i < 10; i ++) {
+    var p = document.createElement("p");
+    var oTxt = document.createTextNode("段落" + i);
+    p.appendChild(oTxt);
+    oFragment.appendChild(p);
+}
+document.body.appendChild(oFragment);
+</script>
+</html>

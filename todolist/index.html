@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container {
+            width: 100vw;
+            background: #ccc;
+            height: 100vh;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+
+        .todo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -195px;
+            margin-top: -26px;
+        }
+
+        .todo input {
+            font-size: 26px;
+        }
+
+        .todo .btn {
+            font-size: 29px;
+        }
+
+        #tasks {
+            width: 360px;
+            padding-left: 10px;
+        }
+
+        #tasks li {
+            font-size: 26px;
+            width: 100%;
+            list-style-type: none;
+        }
+
+        #tasks li .close {
+            color: red;
+        }
+
+        #tasks li input {
+            font-size: 26px;
+        }
+
+        .checked {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="todo">
+            <input id="todoInput" type="text" data-input="work" placeholder="请输入todo内容">
+            <button class="btn">add</button>
+            <ul id="tasks" data-list="work">
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    var todoInput = document.getElementById('todoInput')
+    var ul = document.getElementById('tasks')
+    var btn = document.getElementsByClassName('btn')[0]
+    btn.addEventListener('click', function (event) {
+        var value = todoInput.value
+        var li = document.createElement('li')
+        li.innerHTML =
+            `<span class="close">[x]</span>    <span class="nowTodo">${value}</span><input type="checkbox">`
+        ul.appendChild(li)
+        todoInput.value = ""
+    })
+    ul.addEventListener('click', function (event) {
+        var oul = document.getElementsByTagName('ul')[0]
+        var oli = document.getElementsByTagName('li')
+        var event = event || window.event
+        var target = event.target || event.srcElement
+        if (target.nodeName.toLowerCase() == 'span') {
+            console.log(target.nextSibling.nextSibling.innerHTML)
+            var closeTodo = target.nextSibling.nextSibling.innerHTML
+            for (var i = 0; i < oli.length; i++) {
+                var nowTodo = oli[i].getElementsByClassName('nowTodo')[0]
+                if (nowTodo.innerHTML == closeTodo) {
+                    console.log('nice')
+                    console.log(i)
+                    oul.removeChild(oul.childNodes[i + 1])
+                }
+            }
+        }
+        if (target.nodeName.toLowerCase() == 'input') {
+            console.log('hh')
+            console.log(target.checked)
+            if (!target.checked) {
+                console.log(target.parentNode)
+                target.parentNode.className = ''
+            } else {
+                target.parentNode.className = 'checked'
+            }
+        }
+    })
+</script>
+
+</html>

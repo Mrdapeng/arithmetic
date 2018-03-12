@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var application = function () {
+        //私有函数私有变量
+        var components = new Array();
+        components.push(new BaseComponent());
+        return {
+            //特权方法
+            getComponentCount: function () {
+                return components.length;
+            },
+            registerComponent: function (component) {
+                if (typeof component == "object") {
+                    components.push(component);
+                }
+            }
+        };
+    }();
+    var app2 = function () {
+        var privae_name = 'private';
+        var say = function () {
+            console.log('i am private')
+        }
+        return {
+            publicSay: function () {
+                console.log(privae_name)
+            }
+        }
+    }();
+</script>
+
+</html>

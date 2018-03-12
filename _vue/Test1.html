@@ -1,0 +1,29 @@
+
+<script>
+    var book = {
+        _name: 'fe',
+        _page: 100
+    };
+    Object.defineProperty(book, 'name', {
+        set: function (x) {
+            console.log(this._name)
+            this._name=x
+        },
+        get: function () {
+            return this._name
+        }
+    });
+    Object.defineProperty(book,'page',{
+        set:function(newVal){
+            console.log(this._page)
+            this._page=newVal
+        },
+        get:function(){
+            return this._page
+        }
+    });
+    book.name='backend'
+    console.log(book.name)
+    book.page='120'
+    console.log(book.page)
+</script>

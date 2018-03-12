@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>   
+</body>
+<script>
+    var myul = document.getElementsByTagName("ul")[0];  
+    var list = myul.getElementsByTagName("li");  
+    //闭包实现
+    function solve(){
+        for (var i= 0; i< list.length; i++) {
+            (function(i){
+                list[i].onclick=function(){
+                    alert(this.innerHTML)
+                }
+            })(i)           
+        }
+    }
+    //es6块级作用域
+    function solve2(){
+        for (let i = 0; i < list.length; i++) {
+            list[i].onclick=function(){
+                alert(this.innerHTML)
+            }
+            
+        }
+    }
+    //事件代理
+    function solve3(){
+        myul.addEventListener('click',function(event){
+            var ev=ev||window.event
+            var target =ev.target||ev.srcElement
+            if(target.nodeName.toLowerCase()=='li'){
+                alert(target.innerHTML);
+            }
+        },false)
+    }
+    //
+    solve()
+    // solve2()
+//    solve3()
+
+</script>
+</html>

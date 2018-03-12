@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function Father(xingshi){
+        this.xingshi=xingshi
+    }
+    Father.prototype.say=function(){
+        console.log('my xing is xxx')
+    }
+    function Son(xingshi,play){
+        Father.call(this,arguments[0])
+        this.play=play
+    }
+    Son.prototype=new Father()
+    // son.constructor=son
+    Son.prototype.constructor=Son
+    var sonInstance =new Son('xing','ps4')
+    console.log(sonInstance)
+    console.log(sonInstance.say())
+</script>
+</html>
