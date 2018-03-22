@@ -1,0 +1,86 @@
+实现一个方法genCssSelector，可以根据一个给定的元素生成一个CSS选择器，通过这个选择器可以快速定位到这个元素（document.querySelector(A)）
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <div id="page">
+
+        <div class="content main">
+
+            <div class="refer">
+
+                <ul>
+
+                    <li></li>
+
+                    <li></li>
+
+                    ...
+
+                </ul>
+
+             </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+根据上述HTML结构，完善如下JavaScript代码中的“your code here”部分，使得click事件中的注释要求符合预期：
+
+var genCssSelector = function(){
+
+    // your code here
+
+}
+
+ 
+
+document.addEventListener('click', function(e){
+
+    //点击li时，返回：html body #page .content.main .refer ul li
+
+    console.log(genCssSelector(e.target));
+
+})
+<script>
+    var genCssSelector = function(){
+        var element=arguments[0];//函数传入的第一个参数，即点击元素
+        var parentElement=element.parentNode;//点击元素的父元素
+        var strGenCssSelector=element.tagName.toLowerCase()//获取点击的元素的标签名
+        while(parentElement.nodeName.toLowerCase()!=='#document'){
+            if(parentElement.id!==''){//父元素有id
+                strGenCssSelector='#'+parentElement.id+' '+strGenCssSelector;
+                parentElement=parentElement.parentNode;
+                continue;
+            }else if(parentElement.className!=''){//父元素有class
+                    strGenCssSelector=' '+strGenCssSelector;
+                    var classList=parentElement.className.split(' ');//按照空格分隔className，存入classList数组里
+                    for(var i=classList.length-1;i>=0;i--){//逆序输出
+                        strGenCssSelector='.'+classList[i]+strGenCssSelector;
+                    }
+                    parentElement=parentElement.parentNode;
+                    continue;
+            }else{
+                    strGenCssSelector=parentElement.nodeName.toLowerCase()+' '+strGenCssSelector;
+                    parentElement=parentElement.parentNode;
+                    continue;
+            }
+        }
+        return strGenCssSelector;
+    }
+</script>

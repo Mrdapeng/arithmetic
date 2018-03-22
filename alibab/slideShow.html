@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>slideShow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            border: 0;
+        }
+
+        #container {
+            width: 520px;
+            height: 280px;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #tab {
+            list-style: none;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            z-index: 99999;
+        }
+
+        #tab .selected {
+            background: orange;
+        }
+
+        #tab li {
+            width: 20px;
+            height: 20px;
+            background: #000000;
+            color: #fff;
+            text-align: center;
+            line-height: 20px;
+            float: left;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        #arrows {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            z-index: 99999;
+        }
+
+        #arrows span {
+            width: 20px;
+            height: 22px;
+            background: #000000;
+            color: #fff;
+            text-align: center;
+            line-height: 20px;
+            float: left;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        #imgs {
+            position: relative;
+        }
+
+        #imgs img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="imgs">
+
+        </div>
+        <ul id="tab">
+
+        </ul>
+        <span id="arrows">
+            <span id="prev">&lt;</span>
+            <span id="next">&gt;</span>
+        </span>
+    </div>
+
+    <script>
+        //animate start
+        function animate(elem, attr, callback) {
+            clearInterval(elem.timer);
+            elem.timer = setInterval(function () {
+                var bStop = true;
+                for (var prop in attr) {
+                    var curr = parseInt(getStyle(elem, prop));
+                    if (prop == 'opacity') {
+                        curr = parseInt(getStyle(elem, prop) * 100);
+                    }
+                    var speed = (attr[prop] - curr) / 8;
+                    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+
+                    if (curr != attr[prop]) {
+                        bStop = false;
+                    }
+
+                    if (prop == 'opacity') {
+                        elem.style.opacity = (curr + speed) / 100;
+                        elem.style.filter = 'alpha(opacity=' + (curr + speed) + ')';
+                    } else {
+                        elem.style[prop] = curr + speed + 'px';
+                    }
+                }
+                if (bStop) {
+                    clearInterval(elem.timer);
+                    callback && callback();
+                }
+            }, 30);
+        }
+
+        function getStyle(elem, attr) {
+            if (elem.currentStyle) { //IE
+                return elem.currentStyle[attr];
+            } else {
+                return getComputedStyle(elem, false)[attr];
+            }
+        }
+
+        //animate end
+        var imgUrls = ['http://ww2.sinaimg.cn/large/0060lm7Tly1fpkufzfvvjj30eg07sta7.jpg',
+            'http://ww1.sinaimg.cn/large/0060lm7Tly1fpkug998lxj30eg07stai.jpg',
+            'http://ww1.sinaimg.cn/large/0060lm7Tly1fpkug0ex0uj30eg07sjta.jpg',
+            'http://ww2.sinaimg.cn/large/0060lm7Tly1fpkug2quydj30eg07swga.jpg'
+        ];
+        var oTab = document.getElementById("tab");
+        var oContainer = document.getElementById("container")
+        var oImgs = document.getElementById("imgs");
+
+        function slideShow(imgNum, speed) {
+            this.imgNum = imgNum;
+            this.speed = speed;
+        }
+
+        slideShow.prototype.init = function (imgNum) {
+            for (var i = 0; i < imgNum; i++) {
+                var oli = document.createElement('li')
+                var oimg = document.createElement('img')
+                oli.innerHTML = i + 1
+                oimg.src = imgUrls[i % imgUrls.length]
+                oimg.style.zIndex = imgNum - i
+                oTab.appendChild(oli)
+                oImgs.appendChild(oimg)
+            }
+        }
+        slideShow.prototype.slide = function () {
+            var aImg = oImgs.getElementsByTagName("img");
+            var aLi = oTab.getElementsByTagName("li");
+            var oPrev = document.getElementById("prev");
+            var oNext = document.getElementById("next");
+            var iNow = 0;
+            var zIndex = 4;
+            var timer;
+            for (var i = 0; i < aLi.length; i++) {
+                aLi[i].index = i;
+                aLi[i].onmouseover = function () {
+                    iNow = this.index;
+                    for (var i = 0; i < aLi.length; i++) {
+                        aLi[i].className = "";
+                    }
+                    this.className = "selected";
+                    //把图片透明度变成0
+                    aImg[this.index].style.opacity = 0;
+                    aImg[this.index].style.filter = "alpha(opacity=0)";
+                    //调整图片的层级
+                    aImg[this.index].style.zIndex = ++zIndex;
+                    //动画的方式把透明度变到1
+                    animate(aImg[this.index], {
+                        opacity: 100
+                    });
+                };
+            }
+            oPrev.onclick = oNext.onclick = function () {
+                if (this === oNext) {
+                    iNow++;
+                    if (iNow === aImg.length) {
+                        iNow = 0;
+                    }
+                } else {
+                    iNow--;
+                    if (iNow === -1) {
+                        iNow = aImg.length - 1;
+                    }
+                }
+                aLi[iNow].onmouseover();
+            };
+            play();
+            oContainer.onmouseover = function () {
+                clearInterval(timer);
+            };
+            oContainer.onmouseout = function () {
+                play();
+            };
+
+            function play() {
+                timer = setInterval(function () {
+                    oNext.onclick();
+                }, 1000);
+            }
+        }
+        /**
+         * slideShow
+         * params imgNum speed
+         * 第一个参数控制图片数量，第二个参数控制速度
+         * */
+        var slide = new slideShow(4, 1200)
+        slide.init(slide.imgNum)
+        slide.slide(slide.speed)
+    </script>
+</body>
+
+</html>
