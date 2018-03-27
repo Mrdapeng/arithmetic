@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .miao{
+            position: absolute;
+            width: 20px;
+            height: 100px;
+            left: 50%;
+            height: 50%;
+            background: #000;
+        }
+        .shi{
+            position: absolute;
+            width: 20px;
+            height: 100px;
+            left: 50%;
+            height: 50%;
+            background: #ccc;
+        }
+        .shi{
+            position: absolute;
+            width: 20px;
+            height: 100px;
+            left: 50%;
+            height: 50%;
+            background: #c0c0c0;
+        }
+    </style>
+</head>
+
+<body>
+        <div class="miao"></div>
+        <div class="fen"></div>
+        <div class="shi"></div>
+    <script>
+        var raf = window.requestAnimationFrame
+        var degress = 0;
+        var miao=document.getElementsByClassName('miao')[0]
+        var fen=document.getElementsByClassName('fen')[0]
+        var shi=document.getElementsByClassName('shi')[0]
+        function update(obj) {
+            obj.style.transform = "rotate(" + degress + "deg)"
+            console.log(obj)
+            degress = degress + 1;
+                raf(update)
+        }
+       raf(update(miao))
+    </script>
+</body>
+
+</html>
