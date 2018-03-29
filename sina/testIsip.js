@@ -21,3 +21,16 @@ function is(n) {
   }
 }
 console.log(isIp("255.255.255.255"));
+const numbers = [10, 20, 30, 40];
+const doubledOver50 = numbers.reduce((finalList, num) => {
+  
+  num = num * 2; //double each number (i.e. map)
+  
+  //filter number > 50
+  if (num > 50) {
+    finalList.push(num);
+  }
+  return finalList;
+}, []);
+
+doubledOver50; // [60, 80]

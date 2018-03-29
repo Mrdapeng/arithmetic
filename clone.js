@@ -54,17 +54,26 @@ console.log(zhaosi.sex, wangwu.sex);
 function _clone(o) {
   var buf;
   if (o instanceof Array) {
-      buf=[]
+    buf = [];
     var i = o.length;
     while (i--) {
-        buf[i]=_clone(o[i])
+      buf[i] = _clone(o[i]);
     }
-    return buf
-  }else if(o instanceof Object){
-        var obj ={}
-        for(key in o){
-            obj[key]=_clone(o[key])
-        }
-        return obj
+    return buf;
+  } else if (o instanceof Object) {
+    var obj = {};
+    for (key in o) {
+      obj[key] = _clone(o[key]);
+    }
+    return obj;
   }
+}
+
+function _bind() {
+  var self = this;
+  var context = [].shift.call(arguments);
+  var args = [].slice.call(arguments);
+  return function() {
+    return self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+  };
 }
