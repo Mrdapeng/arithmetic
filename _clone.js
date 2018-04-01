@@ -9,3 +9,4 @@ function clone(obj) {
   }
   return newObj;
 }
+x

@@ -17,3 +17,9 @@ function inherit(subType,superType){
     _proto.constructor=subType
     subType.prototype=_proto
 }
+function add(a){
+    return function(b){
+        return a+b
+    }
+}
+const add =a=>b=>a+b
