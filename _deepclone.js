@@ -23,7 +23,7 @@ function deepClone(obj) {
   }
   var o = isArr(obj) ? [] : {};
   for (i in obj) {
-    if (obj.hasOwnProptery(obj[i])) {
+    if (obj.hasOwnProptery(i)) {
       o[i] = typeof obj[i] === "Object" ? deepClone(obj[i]) : obj[i];
     }
   }
