@@ -4,6 +4,6 @@ const find = function(arr) {
     !o[i] ? (o[i] = 1) : o[i]++;
   }
   for (var k in o) {
-    if (o[k] % 2 !== 0) return k;
+    if (o[k] % 2 !== 0) return +k;
   }
 };
