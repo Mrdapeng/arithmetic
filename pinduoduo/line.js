@@ -19,19 +19,13 @@ function solve() {
     for (var j = arr[i].start; j < arr[i].end; j++) {
       if (!dot[j]) {
         dot[j] = 1;
-      } else {
-        dot[j]++;
-      }
+        result++
+      } 
     }
   }
-  console.log(dot)
-  for (var key in dot) {
-    if (dot[key] > 0) {
-      result++;
-    }
-
-  }
-  console.log(result)
+  console.log(arr);
+  console.log(result);
+  return result
 }
 
 solve()

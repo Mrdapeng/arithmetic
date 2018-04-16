@@ -1,22 +1,37 @@
-function factorial(n){
-    if(n===1){return 1}
-    return factorial(n-1)*n
+function factorial(n) {
+    if (n === 1) {
+        return 1
+    }
+    return factorial(n - 1) * n
 }
 
 //尾调用优化版
 
-function factorial2(n,total){
-    if(n==1){return total }
-    return n*factorial2(n-1,n*total)
-}
-
-
-function fib2(n){
-    var store=[1,1]
-    if(n==1||n==2)return 1
-    for(var i=2;i<n;i++){
-        store[i]=store[i-1]=store[i-2]
+function factorial2(n, total) {
+    if (n == 1) {
+        return total
     }
-    return store[n-1]
+    return n * factorial2(n - 1, n * total)
 }
 
+
+function fib2(n) {
+    var store = [1, 1]
+    if (n == 1 || n == 2) return 1
+    for (var i = 2; i < n; i++) {
+        store[i] = store[i - 1] = store[i - 2]
+    }
+    return store[n - 1]
+}
+
+function fib3(n) {
+    var prev = 1
+    var next = 1
+    if (n == 1 || n == 2) return 1
+    for (let i = 2; i < n; i++) {
+        res = next + prev
+        prev = next
+        next = res
+    }
+    return res
+}
