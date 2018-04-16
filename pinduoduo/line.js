@@ -23,8 +23,6 @@ function solve() {
       } 
     }
   }
-  console.log(arr);
-  console.log(result);
   return result
 }
 
